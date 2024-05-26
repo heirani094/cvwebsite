@@ -14,8 +14,10 @@ def contact_view(request):
 def about_view(request):
     return render(request, 'website/about.html')
 
+def elements_view(request):
+    return render(request, 'website/elements.html')
 
-def get_image(request):
-    with open('path/to/image.jpg', 'rb') as f:
-        image_data = f.read()
-    return HttpResponse(image_data, content_type="image/jpeg")
+def portfolio_view(request):
+    return render(request, 'website/portfolio.html')
+
+
