@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load custom_filters %}
 {% load static %}
 {% block content %}
 
@@ -73,14 +74,14 @@
                                <div class="col-md-3">
                                    <div class="blog_info text-right">
                                         <div class="post_tag">
-                                            <a href="#">غذا،</a>
-                                            <a class="active" href="#">تکنولوژی،</a>
-                                            <a href="#">سیاست،</a>
-                                            <a href="#">زندگی</a>
+
+                                            <a href="#">{{post.category.all|join:", "}},</a>
+
+
                                         </div>
                                         <ul class="blog_meta list" dir="ltr">
                                                 <li><a href="#" >{{post.author.get_full_name}}<i class="lnr lnr-user"></i></a></li>
-                                                <li><a href="#" > {{post.published_date|date:"D d M Y"}} <i class="lnr lnr-calendar-full"></i></a></li>
+                                                <li><a href="#" > {{post.published_date|to_jalali }} <i class="lnr lnr-calendar-full"></i></a></li>
                                                 <li><a href="#" >{{post.counted_view}} <i class="lnr lnr-eye"></i></a></li>
                                                 <li><a href="#" >  کامنت ۶ عدد <i class="lnr lnr-bubble"></i></a></li>
                                          </ul>
@@ -88,10 +89,10 @@
                                </div>
                                 <div class="col-md-9">
                                     <div class="blog_post">
-                                        <img src="{% static 'img/blog/main-blog/m-blog-1.jpg' %}" alt="">
+                                        <img src="{{post.image.url}}" alt="">
                                         <div class="blog_details">
                                             <a href="{% url 'blog:single' pid=post.id %}"><h2>{{Post.title}}</h2></a>
-                                            <p>{{Post.content}}</p>
+                                            <p>{{post.content|truncatewords:20}}</p>
                                             <a href="{% url 'blog:single' pid=post.id %}" class="white_bg_btn">View More</a>
                                         </div>
                                     </div>
@@ -134,19 +135,7 @@
                                     </div><!-- /input-group -->
                                     <div class="br"></div>
                                 </aside>
-                                <aside class="single_sidebar_widget author_widget">
-                                    <img class="author_img rounded-circle" src="{% static 'img/blog/author.png" alt="">
-                                    <h4>محمد محمدی</h4>
-                                    <p>وبلاگ نویس</p>
-                                    <div class="social_icon">
-                                        <a href="#"><i class="fa fa-facebook"></i></a>
-                                        <a href="#"><i class="fa fa-twitter"></i></a>
-                                        <a href="#"><i class="fa fa-github"></i></a>
-                                        <a href="#"><i class="fa fa-behance"></i></a>
-                                    </div>
-                                    <p>وبلاگ نویسی به نوعی احترام به بازدید کننده و مخاطب است و شرایطی به وجود می‌آورد که آنها راحت‌تر به اطلاعات مورد نیاز دسترسی داشته باشند.</p>
-                                    <div class="br"></div>
-                                </aside>
+                               {% include 'blog/blog-writer.html' %}
                                 <aside class="single_sidebar_widget popular_post_widget" س
                             >
                                     <h3 class="widget_title">پست های محبوب</h3>
