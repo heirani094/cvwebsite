@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-{% load custom_filters %}
+{% load blog_tags %}
 {% load static %}
 {% block content %}
         <!--================Home Banner Area =================-->
@@ -8,11 +8,11 @@
 				<div class="banner_inner d-flex align-items-center">
 					<div class="container">
 						<div class="banner_content text-center">
-							<h2>{{post.title}}</h2>
+							<h2>{{post.title|to_persian_numerals}}</h2>
 							<div class="page_link">
 								<a href="{% url 'website:index' %}">خانه</a>
 								<a href="{% url 'blog:index' %}" style="margin-left:30px ;">وبلاگ</a>
-								<a href="{% url 'blog:single' pid=post.id %}">{{post.title}}</a>
+								<a href="{% url 'blog:single' pid=post.id %}">{{post.title|to_persian_numerals}}</a>
 							</div>
 						</div>
 					</div>
@@ -36,7 +36,7 @@
                                 <div class="blog_info text-right">
                                     <div class="post_tag">
                                         {% for cat in post.category.all   %}
-                                            <a href="#">{{cat.name}},</a>
+                                            <a href="{% url 'blog:category' cat_name=cat.name %}">{{cat.name}}</a>
                                              {% if not forloop.last %},
                                              {% endif %}
                                               {% endfor %}
@@ -44,7 +44,7 @@
                                     <ul class="blog_meta list" dir="ltr">
                                         <li><a href="#" >{{post.author.get_full_name}}<i class="lnr lnr-user"></i></a></li>
                                         <li><a href="#" >  {{post.published_date|to_jalali}} <i class="lnr lnr-calendar-full"></i></a></li>
-                                        <li><a href="#" >{{post.counted_view}} <i class="lnr lnr-eye"></i></a></li>
+                                        <li><a href="#" >{{post.counted_view|to_persian_numerals}} <i class="lnr lnr-eye"></i></a></li>
                                         <li><a href="#" >  کامنت ۶ عدد <i class="lnr lnr-bubble"></i></a></li>
                                     </ul>
                                     <ul class="social-links" dir="ltr">
@@ -56,7 +56,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-9 col-md-9 blog_details">
-                                <h2>{{post.title}}</h2>
+                                <h2>{{post.title|to_persian_numerals}}</h2>
                                 <p class="excert">
                                    {{post.content}}
                                 </p>
@@ -76,25 +76,29 @@
                                     <div class="arrow">
                                         <a href="#"><span class="lnr text-white lnr-arrow-right"></span></a>
                                     </div>
+                                   {% if previous_post %}
                                     <div class="detials" style="margin-right:10px ;">
                                         <p>پست قبلی</p>
-                                        <a href="#" style="float: left;"><h4>دنیا علیزاده</h4></a>
+                                        <a href="{% url 'blog:single' previous_post.pk %}" style="float: left;"><h4>{{previous_post.title}}</h4></a>
                                     </div>
                                     <div class="thumb">
-                                        <a href="#"><img class="img-fluid" src="{% static 'img/blog/prev.jpg' %}" alt=""></a>
+                                        <a href="{% url 'blog:single' previous_post.pk %}"><img class="img-fluid" src={{ previous_post.image_thumbnail.url }} alt=""></a>
                                     </div>
+                                   {% endif %}
                                 </div>
                                 <div class="col-lg-6 col-md-6 col-12 nav-right flex-row d-flex justify-content-end align-items-center" dir="ltr">
+                                  {% if next_post %}
                                     <div class="detials">
                                         <p>پست بعدی</p>
-                                        <a href="#"><h4>آرمیتا دنیوی</h4></a>
+                                        <a href="{% url 'blog:single' next_post.pk %}"><h4>{{next_post.title}}</h4></a>
                                     </div>
                                     <div class="arrow">
-                                        <a href="#"><span class="lnr text-white lnr-arrow-left"></span></a>
+                                        <a href="{% url 'blog:single' next_post.pk %}"><span class="lnr text-white lnr-arrow-left"></span></a>
                                     </div>
                                     <div class="thumb">
-                                        <a href="#"><img class="img-fluid" src="{% static 'img/blog/next.jpg' %}" alt=""></a>
-                                    </div>										
+                                        <a href="{% url 'blog:single' next_post.pk %}"><img class="img-fluid" src={{ next_post.image_thumbnail.url }} alt=""></a>
+                                    </div>
+                                  {% endif %}
                                 </div>									
                             </div>
                         </div>
@@ -229,91 +233,12 @@
                                 <div class="br"></div>
                             </aside>
                            {% include 'blog/blog-writer.html' %}
-                            <aside class="single_sidebar_widget popular_post_widget" س
-                        >
-                                <h3 class="widget_title">پست های محبوب</h3>
-                                <div class="media post_item">
-                                    <img src="{% static 'img/blog/popular-post/post1.jpg' %}" alt="post">
-                                    <div class="media-body">
-                                        <a href="{% url 'blog:index' %}"><h3>تا کجا میشود رفت</h3></a>
-                                        <p>۲ ساعت پیش</p>
-                                    </div>
-                                </div>
-                                <div class="media post_item">
-                                    <img src="{% static 'img/blog/popular-post/post2.jpg' %}" alt="post">
-                                    <div class="media-body">
-                                        <a href="{% url 'blog:index' %}"><h3>درآمد های ویژه</h3></a>
-                                        <p>۲ ساعت پیش</p>
-                                    </div>
-                                </div>
-                                <div class="media post_item">
-                                    <img src="{% static 'img/blog/popular-post/post3.jpg' %}" alt="post">
-                                    <div class="media-body">
-                                        <a href="{% url 'blog:index' %}"><h3>سیاره گردی</h3></a>
-                                        <p>۳ ساعت پیش</p>
-                                    </div>
-                                </div>
-                                <div class="media post_item">
-                                    <img src="{% static 'img/blog/popular-post/post4.jpg' %}" alt="post">
-                                    <div class="media-body">
-                                        <a href="{% url 'blog:index' %}"><h3>تلسکوپ مجازی</h3></a>
-                                        <p>۱ ساعت پیش</p>
-                                    </div>
-                                </div>
-                                <div class="br"></div>
-                            </aside>
+                            {% latestposts %}
                             <aside class="single_sidebar_widget ads_widget">
                                 <a href="#"><img class="img-fluid" src="{% static 'img/blog/add.jpg' %}" alt=""></a>
                                 <div class="br"></div>
                             </aside>
-                            <aside class="single_sidebar_widget post_category_widget">
-                                <h4 class="widget_title">دسته بندی پست ها</h4>
-                                <ul class="list cat-list">
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>تکنولوژی</p>
-                                            <p>۳۷</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>زندگی</p>
-                                            <p>۲۴</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>مد</p>
-                                            <p>۵۹</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>هنر</p>
-                                            <p>۲۹</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>غذا</p>
-                                            <p>۱۵</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>معماری</p>
-                                            <p>۰۹</p>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#" class="d-flex justify-content-between">
-                                            <p>ماجراجویی</p>
-                                            <p>۴۴</p>
-                                        </a>
-                                    </li>															
-                                </ul>
-                                <div class="br"></div>
-                            </aside>
+                            {% postcategories %}
                             <aside class="single-sidebar-widget newsletter_widget">
                                 <h4 class="widget_title">خبرنامه</h4>
                                 <p>

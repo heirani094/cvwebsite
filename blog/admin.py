@@ -1,5 +1,5 @@
 from django.contrib import admin
-from blog.models import Post, Category
+from blog.models import Post, Category, Advertisement
 
 
 class PostAdmin(admin.ModelAdmin):
@@ -11,6 +11,12 @@ class PostAdmin(admin.ModelAdmin):
     search_fields = ['title', 'content']
 
 
+class AdvertisementAdmin(admin.ModelAdmin):
+    list_display = ('title', 'link', 'created_date')
+    search_fields = ('title',)
+
+
 admin.site.register(Post, PostAdmin)
 admin.site.register(Category)
+admin.site.register(Advertisement, AdvertisementAdmin)
 # Register your models here.

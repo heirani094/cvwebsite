@@ -1,24 +1,14 @@
 from django.shortcuts import render, get_object_or_404
 from datetime import date
 from blog.models import Post
-import persian
 from datetime import datetime
+from django.utils import timezone
 
 
-def convert_to_persian(text):
-    text = str(text)
-    text = persian.convert_ar_numbers(text)
-    text = persian.convert_en_numbers(text)
-    return text
-
-
-def blog_view(request):
+def blog_view(request, cat_name=None):
     posts = Post.objects.filter(status=1, published_date__lte=datetime.now()).order_by('-published_date')
-
-    for post in posts:
-        post.title = convert_to_persian(post.title)
-        post.counted_view = convert_to_persian(post.counted_view)
-
+    if cat_name:
+        posts = posts.filter(category__name=cat_name)
     context = {'posts': posts}
     return render(request, 'blog/blog.html', context)
 
@@ -30,8 +20,14 @@ def single_view(request, pid):
     post = get_object_or_404(Post, pk=pid, status=1, published_date__lte=datetime.now())
     post.counted_view += 1
     post.save()
-    post.title = convert_to_persian(post.title)
-    post.counted_view = convert_to_persian(post.counted_view)
-    context = {'post': post}
+    previous_post = Post.objects.filter(pk__lt=post.pk, status=1, published_date__lte=timezone.now()).order_by(
+        '-pk').first()
+    next_post = Post.objects.filter(pk__gt=post.pk, status=1, published_date__lte=timezone.now()).order_by(
+        'pk').first()
+    context = {
+        'post': post,
+        'previous_post': previous_post,
+        'next_post': next_post
+    }
 
     return render(request, 'blog/single.html', context)

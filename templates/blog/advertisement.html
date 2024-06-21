@@ -1,0 +1,12 @@
+{% load static %}
+{% load blog_tags %}
+<aside class="single_sidebar_widget ads_widget">
+    <h3 class="widget_title">تبلیغات</h3>
+    {% get_ads as ads %}
+    {% for ad in ads %}
+    <div class="media ad_item">
+        <a href="{{ ad.link }}"><img src="{{ ad.image.url }}" alt="{{ ad.title }}"></a>
+    </div>
+    {% endfor %}
+    <div class="br"></div>
+</aside>
