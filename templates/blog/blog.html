@@ -83,6 +83,7 @@
 
                                         </div>
                                         <ul class="blog_meta list" dir="ltr">
+                                            <!--href={"% url 'blog:author' author_username=post.author.username %"}-->
                                                 <li><a href="#" >{{post.author.get_full_name}}<i class="lnr lnr-user"></i></a></li>
                                                 <li><a href="#" > {{post.published_date|to_jalali }} <i class="lnr lnr-calendar-full"></i></a></li>
                                                 <li><a href="#" >{{post.counted_view|to_persian_numerals}} <i class="lnr lnr-eye"></i></a></li>
@@ -104,40 +105,43 @@
                              {% endfor %}
                             <nav class="blog-pagination justify-content-center d-flex">
 		                        <ul class="pagination">
+
+                                    {% if posts.has_previous %}
 		                            <li class="page-item">
-		                                <a href="#" class="page-link" aria-label="Previous">
+		                                <a href="?page={{ posts.previous_page_number }}" class="page-link" aria-label="Previous">
 		                                    <span aria-hidden="true">
 		                                        <span class="lnr lnr-chevron-right"></span>
 		                                    </span>
 		                                </a>
 		                            </li>
-		                            <li class="page-item"><a href="#" class="page-link">۰۱</a></li>
-		                            <li class="page-item active"><a href="#" class="page-link">۰۲</a></li>
-		                            <li class="page-item"><a href="#" class="page-link">۰۳</a></li>
-		                            <li class="page-item"><a href="#" class="page-link">۰۴</a></li>
-		                            <li class="page-item"><a href="#" class="page-link">۰۹</a></li>
+                                    {% endif %}
+
+                                    {% for i in posts.paginator.page_range %}
+                                      {% if posts.number == i %}
+		                                <li class="page-item active"><a href="?page={{i}}" class="page-link">{{i}}</a></li>
+                                      {% else %}
+                                        <li class="page-item "><a href="?page={{i}}" class="page-link">{{i}}</a></li>
+                                      {% endif %}
+		                            {% endfor %}
+
+                                    {% if posts.has_next %}
 		                            <li class="page-item">
-		                                <a href="#" class="page-link" aria-label="Next">
+		                                <a href="?page={{ posts.paginator.num_pages }}" class="page-link" aria-label="Next">
 		                                    <span aria-hidden="true">
 		                                        <span class="lnr lnr-chevron-left"></span>
 		                                    </span>
 		                                </a>
 		                            </li>
+                                    {% endif %}
+
 		                        </ul>
 		                    </nav>
                         </div>
                     </div>
                     <div class="col-lg-4">
                             <div class="blog_right_sidebar">
-                                <aside class="single_sidebar_widget search_widget">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control padd-src" placeholder="جستجو پست" >
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button"><i class="lnr lnr-magnifier"></i></button>
-                                        </span>
-                                    </div><!-- /input-group -->
-                                    <div class="br"></div>
-                                </aside>
+                               <!--search-->
+                               {% include 'blog/blog-search.html' %}
                                {% include 'blog/blog-writer.html' %}
                                 {% latestposts %}
 
