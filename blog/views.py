@@ -6,15 +6,17 @@ from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
-def blog_view(request, cat_name=None):
-    # def blog_view(request,**kwargs):
+# def blog_view(request, cat_name=None):
+def blog_view(request, **kwargs):
     posts = Post.objects.filter(status=1, published_date__lte=datetime.now()).order_by('-published_date')
-    if cat_name:
-        posts = posts.filter(category__name=cat_name)
-    # if kwargs.get('cat_name')!=None:
-    # posts=posts.filter(category__name=kwargs['cat_name'])
-    # if kwargs.get('author_username')!=None:
-    # posts=posts.filter(author__username=kwargs['author_username'])
+    # if cat_name:
+    #  posts = posts.filter(category__name=cat_name)
+    if kwargs.get('cat_name') != None:
+        posts = posts.filter(category__name=kwargs['cat_name'])
+    if kwargs.get('author_username') != None:
+        posts = posts.filter(author__username=kwargs['author_username'])
+    if kwargs.get('tag_name') != None:
+        posts = posts.filter(tags__name__in=kwargs['tag_name'])
     posts = Paginator(posts, 3)
 
     try:
@@ -52,5 +54,3 @@ def single_view(request, pid):
     }
 
     return render(request, 'blog/single.html', context)
-
-

@@ -1,7 +1,6 @@
+<!--contact.html-->
 {% extends 'base.html' %}
 {% load static %}
-
-
 {% block content %}
         
         <!--================Home Banner Area =================-->
@@ -54,8 +53,19 @@
                         </div>
                     </div>
                     <div class="col-lg-9">
+                                              <!-- نمایش پیام‌ها -->
+                        {% if messages %}
+                        <div class="modal-content">
+                            <ul>
+                                {% for message in messages %}
+                                <li {% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        </div>
+                        {% endif %}
                         <form class="row contact_form" action="{% url 'website:contact' %}" method="post"  novalidate="novalidate">
                             {% csrf_token %}
+                          <!--  {{ form.as_p }}-->
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <input type="text" class="form-control"  name="name" placeholder="نام خود را وادر کنید">

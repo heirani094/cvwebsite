@@ -1630,7 +1630,7 @@ button:focus {
     right: -15px;
     top: -15px;
     padding: 0px;
-    color: #fff;
+    color: #1aacbf;
     opacity: 1;
     cursor: pointer;
 }
@@ -1646,6 +1646,7 @@ button:focus {
 .modal-message .modal-dialog .modal-content .modal-header p {
     display: block;
 }
+
 
 /* End Contact Success and error Area css
 ============================================================================================ */

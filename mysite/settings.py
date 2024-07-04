@@ -35,8 +35,17 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
     'website',
-    'blog'
+    'blog',
+    'taggit',
+    #'grappelli',
+    ##'ckeditor_uploader'
+    #'suit',
+    'django_ckeditor_5'
+
 ]
 
 MIDDLEWARE = [
@@ -128,3 +137,24 @@ STATICFILES_DIRS = [
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+SITE_ID = 1
+#CKEDITOR_UPLOAD_PATH = "uploads/"
+ #CKEDITOR_CONFIGS = {
+   # 'default': {
+       # 'toolbar': 'full',
+       # 'height': 300,
+       # 'width': '100%',
+   # },
+#}
+CKEDITOR_5_CONFIGS = {
+    'default': {
+        'toolbar': [
+            'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'
+        ],
+        'height': 300,
+        'width': '100%',
+    },
+}
+#add your reCAPTCHA keys
+#RECAPTCHA_PUBLIC_KEY = '6Ldz2gcqAAAAAO7SrFN6cHziPZh_iLyr3VxBVam3'
+#RECAPTCHA_PRIVATE_KEY = '6Ldz2gcqAAAAAHTKNjlvmL1S5aQqT3CAAIMLrGNs'

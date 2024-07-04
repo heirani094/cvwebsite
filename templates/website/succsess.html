@@ -1,0 +1,15 @@
+<!-- success.html -->
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="success_area">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2>پیام شما با موفقیت ارسال شد!</h2>
+                <a href="{% url 'website:index' %}" class="btn btn-primary">بازگشت به صفحه اصلی</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
