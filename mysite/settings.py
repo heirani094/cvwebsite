@@ -29,6 +29,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    #  'multi-captcha-admin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -41,13 +42,19 @@ INSTALLED_APPS = [
     'website',
     'blog',
     'taggit',
-    #'grappelli',
+    # 'grappelli',
     ##'ckeditor_uploader'
-    #'suit',
-    'django_ckeditor_5'
-
+    # 'suit',
+    #  'django_ckeditor_5',
+    # 'captcha_admin',
+    'captcha',
+    'django_summernote',
+    'robots'
 ]
-
+# captca admin settings
+# MULTI_CAPTCHA_ADMIN = {
+#   'engine': 'simple-captcha',
+# }
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -138,23 +145,39 @@ STATICFILES_DIRS = [
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 SITE_ID = 1
-#CKEDITOR_UPLOAD_PATH = "uploads/"
- #CKEDITOR_CONFIGS = {
-   # 'default': {
-       # 'toolbar': 'full',
-       # 'height': 300,
-       # 'width': '100%',
-   # },
-#}
-CKEDITOR_5_CONFIGS = {
-    'default': {
+# CKEDITOR_UPLOAD_PATH = "uploads/"
+# CKEDITOR_CONFIGS = {
+# 'default': {
+# 'toolbar': 'full',
+# 'height': 300,
+# 'width': '100%',
+# },
+# }
+# CKEDITOR_5_CONFIGS = {
+#  'default': {
+#      'toolbar': [
+#          'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'
+#     ],
+#   'height': 300,
+#  'width': '100%',
+# },
+# }
+# add your reCAPTCHA keys
+# RECAPTCHA_PUBLIC_KEY = '6Ldz2gcqAAAAAO7SrFN6cHziPZh_iLyr3VxBVam3'
+# RECAPTCHA_PRIVATE_KEY = '6Ldz2gcqAAAAAHTKNjlvmL1S5aQqT3CAAIMLrGNs'
+
+# settings summernote
+SUMMERNOTE_THEME = 'bs4'  # استفاده از تم Bootstrap4
+SUMMERNOTE_CONFIG = {
+    'summernote': {
         'toolbar': [
-            'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote'
+            ['style', ['style']],
+            ['font', ['bold', 'italic', 'underline', 'clear']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['insert', ['link', 'picture', 'video']],
         ],
-        'height': 300,
         'width': '100%',
+        'height': '480',
     },
+    'attachment_require_authentication': True,
 }
-#add your reCAPTCHA keys
-#RECAPTCHA_PUBLIC_KEY = '6Ldz2gcqAAAAAO7SrFN6cHziPZh_iLyr3VxBVam3'
-#RECAPTCHA_PRIVATE_KEY = '6Ldz2gcqAAAAAHTKNjlvmL1S5aQqT3CAAIMLrGNs'

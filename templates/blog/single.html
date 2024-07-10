@@ -45,7 +45,7 @@
                                         <li><a href="{% url 'blog:author' author_username=post.author.username %}" >{{post.author.get_full_name}}<i class="lnr lnr-user"></i></a></li>
                                         <li><a href="#" >  {{post.published_date|to_jalali}} <i class="lnr lnr-calendar-full"></i></a></li>
                                         <li><a href="#" >{{post.counted_view|to_persian_numerals}} <i class="lnr lnr-eye"></i></a></li>
-                                        <li><a href="#" >  کامنت ۶ عدد <i class="lnr lnr-bubble"></i></a></li>
+                                        <li><a href="#" >کامنت  {{comments|length|to_persian_numerals}} <i class="lnr lnr-bubble"></i></a></li>
                                     </ul>
                                     <ul class="social-links" dir="ltr">
                                         <li><a href="#"><i class="fa fa-facebook"></i></a></li>
@@ -58,7 +58,7 @@
                             <div class="col-lg-9 col-md-9 blog_details">
                                 <h2>{{post.title|to_persian_numerals}}</h2>
                                 <p class="excert">
-                                   {{post.content}}
+                                   {{post.content|safe}}
                                 </p>
 
                             </div>
@@ -102,104 +102,31 @@
                                 </div>									
                             </div>
                         </div>
-                        <div class="comments-area" >
-                            <h4>  ۵ کامنت</h4>
-                            <div class="comment-list">
-                                <div class="single-comment justify-content-between d-flex">
-                                    <div class="user justify-content-between d-flex">
-                                        <div class="thumb cm-padd">
-                                            <img src="{% static 'img/blog/c1.jpg' %}" alt="">
-                                        </div>
-                                        <div class="desc">
-                                            <h5><a href="#">مینا عابدی</a></h5>
-                                            <p class="date">بهمن ۱۳۹۸ </p>
-                                            <p class="comment">
-                                                مطالب زیبا آموزنده و عالیه ممنون،
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="reply-btn">
-                                           <a href="" class="btn-reply text-uppercase" style="text-align: left;">پاسخ</a> 
-                                    </div>
-                                </div>
-                            </div>	
-                            <div class="comment-list ">
-                                <div class="single-comment justify-content-between d-flex">
-                                    <div class="user justify-content-between d-flex">
-                                        <div class="thumb cm-padd">
-                                            <img src="{% static 'img/blog/c2.jpg' %}" alt="">
-                                        </div>
-                                        <div class="desc">
-                                            <h5><a href="#">احمد محمدی</a></h5>
-                                            <p class="date">بهمن ۱۳۹۸ </p>
-                                            <p class="comment">
-                                                دنیای اطرافو هر چه دقیق تر ببینم زیبا تره.
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="reply-btn">
-                                           <a href="" class="btn-reply text-uppercase" style="text-align: left;" >پاسخ</a> 
-                                    </div>
-                                </div>
-                            </div>	
-                            <div class="comment-list">
-                                <div class="single-comment justify-content-between d-flex">
-                                    <div class="user justify-content-between d-flex">
-                                        <div class="thumb cm-padd">
-                                            <img src="{% static 'img/blog/c3.jpg' %}" alt="">
-                                        </div>
-                                        <div class="desc">
-                                            <h5><a href="#">زهرا فاخر</a></h5>
-                                            <p class="date">بهمن ۱۳۹۸ </p>
-                                            <p class="comment">
-                                                مطالب عالی و زیبا و دوست داشتنیه ادامه بدید
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="reply-btn">
-                                           <a href="" class="btn-reply text-uppercase" style="text-align: left;">پاسخ</a> 
-                                    </div>
-                                </div>
-                            </div>	
-                            <div class="comment-list">
-                                <div class="single-comment justify-content-between d-flex">
-                                    <div class="user justify-content-between d-flex">
-                                        <div class="thumb cm-padd">
-                                            <img src="{% static 'img/blog/c4.jpg' %}" alt="">
-                                        </div>
-                                        <div class="desc">
-                                            <h5><a href="#">غزل رنجبر</a></h5>
-                                            <p class="date">بهمن ۱۳۹۸ </p>
-                                            <p class="comment">
-                                                آره واقع این سایت میتونه خیلی به آدم کمک کنه
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="reply-btn">
-                                           <a href="" class="btn-reply text-uppercase" style="text-align:left ;">پاسخ</a> 
-                                    </div>
-                                </div>
-                            </div>	
-                            <div class="comment-list">
-                                <div class="single-comment justify-content-between d-flex">
-                                    <div class="user justify-content-between d-flex">
-                                        <div class="thumb cm-padd">
-                                            <img src="{% static 'img/blog/c5.jpg' %}" alt="">
-                                        </div>
-                                        <div class="desc" >
-                                            <h5><a href="#">رضا فاخر</a></h5>
-                                            <p class="date">بهمن ۱۳۹۸ </p>
-                                            <p class="comment">
-                                                بهتر از این زندگی هم هست آخه مگر میشود
-                                            </p>
-                                        </div>
-                                    </div>
-                                    <div class="reply-btn">
-                                           <a href="" class="btn-reply text-uppercase" style="float: left;">پاسخ</a> 
-                                    </div>
-                                </div>
-                            </div>	                                             				
-                        </div>
+                         <!--کامنت-->
+                            {% include 'blog/blog-comments.html' %}
+
+                      <!--disqus  <div class="comment-form">
+                            <div id="disqus_thread"></div>
+                            <script>
+                                /**
+                                *  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+                                *  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+                                /*
+                                var disqus_config = function () {
+                                this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+                                this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+                                };
+                                */
+                                (function() { // DON'T EDIT BELOW THIS LINE
+                                var d = document, s = d.createElement('script');
+                                s.src = 'https://127-0-0-1-8000-1d0vrsnmuv.disqus.com/embed.js';
+                                s.setAttribute('data-timestamp', +new Date());
+                                (d.head || d.body).appendChild(s);
+                                })();
+                            </script>
+                            <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+                        </div>-->
+
                         <div class="comment-form">
                             <h4>ثبت بازخورد</h4>
                             <form>
@@ -229,7 +156,8 @@
                                     <span class="input-group-btn">
                                         <button class="btn btn-default" type="button"><i class="lnr lnr-magnifier"></i></button>
                                     </span>
-                                </div><!-- /input-group -->
+                                </div>
+                                <!-- /input-group -->
                                 <div class="br"></div>
                             </aside>
                            {% include 'blog/blog-writer.html' %}

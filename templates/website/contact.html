@@ -65,7 +65,7 @@
                         {% endif %}
                         <form class="row contact_form" action="{% url 'website:contact' %}" method="post"  novalidate="novalidate">
                             {% csrf_token %}
-                          <!--  {{ form.as_p }}-->
+
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <input type="text" class="form-control"  name="name" placeholder="نام خود را وادر کنید">
@@ -83,6 +83,10 @@
                                 </div>
                             </div>
                             <div class="col-md-12 text-right">
+                                <!--captcha-->
+                                <div class="pb-3">
+                                    {{form.captcha}}
+                                </div>
                                 <button type="submit" value="submit" class="btn submit_btn" style="float: left;" >ارسال دیدگاه</button>
                             </div>
                         </form>

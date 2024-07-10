@@ -1,6 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from datetime import date
-from blog.models import Post
+from blog.models import Post, Comment
 from datetime import datetime
 from django.utils import timezone
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -47,10 +47,12 @@ def single_view(request, pid):
         '-pk').first()
     next_post = Post.objects.filter(pk__gt=post.pk, status=1, published_date__lte=timezone.now()).order_by(
         'pk').first()
+    comments = Comment.objects.filter(post=post.id, approved=True)
     context = {
         'post': post,
         'previous_post': previous_post,
-        'next_post': next_post
+        'next_post': next_post,
+        'comments': comments
     }
 
     return render(request, 'blog/single.html', context)
